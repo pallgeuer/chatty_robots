@@ -1,0 +1,6 @@
+uint64 speech_id      # Unique ID of a speech request
+uint16[] speak_items  # Text array indices to sequentially speak (see array in original speech request)
+bool wait             # Whether to wait for all spoken items to complete before returning from this service
+bool clear            # Whether to clear this entire speech request from cache after the given items have finished speaking
+---
+bool success          # Whether all tasks were successfully completed or enqueued

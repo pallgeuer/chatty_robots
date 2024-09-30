@@ -1,0 +1,8 @@
+string[] texts        # Array of texts to cache as part of a speech request and potentially speak
+uint16[] speak_items  # Text array indices to sequentially speak immediately
+bool wait             # Whether to wait for all spoken items to complete before returning from this service
+bool persist          # If false, clear each text from cache after the first time it has been spoken (any time now or later), otherwise keep each text in cache forever until explicitly cleared as part of clearing the entire speech request (when all texts of a speech request have been cleared, the entire speech request is cleared)
+bool clear            # Whether to clear this entire speech request from cache after the given items have finished speaking
+---
+uint64 speech_id      # Unique ID that identifies this speech request
+bool success          # Whether all tasks were successfully completed or enqueued

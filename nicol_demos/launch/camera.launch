@@ -1,0 +1,52 @@
+<launch>
+
+	<arg name="use_left_camera" default="true" />
+	<arg name="use_right_camera" default="false" />
+	<arg name="left_camera_device" default="/dev/videoNICOL_l_eye" />
+	<arg name="right_camera_device" default="/dev/videoNICOL_r_eye" />
+	<arg name="play_bag" default="" />
+	<arg name="play_bag_rate" default="1" />
+	<arg name="play_bag_pause" default="false" />
+	<arg name="play_bag_args" default="" />
+	<arg name="record_bag" default="" />
+	<arg name="record_bag_delay" default="10" />
+	<arg name="always_capture" default="false" />
+	<arg name="camera_width" default="640" />
+	<arg name="camera_height" default="480" />
+	<arg name="camera_fps" default="30.0" />
+
+	<group if="$(eval bool(play_bag))">
+
+		<param name="/use_sim_time" value="true" />
+
+		<arg name="play_bag_args_all" value="$(eval ('--pause' if play_bag_pause else '') + ' ' + play_bag_args)" />
+
+		<node pkg="rosbag" type="play" name="play_camera_bag" output="screen" args="--quiet --queue=2 --clock --loop -r $(arg play_bag_rate) $(arg play_bag_args_all) $(arg play_bag)" required="true" />
+
+	</group>
+
+	<group if="$(eval not play_bag and (use_left_camera or use_right_camera))">
+
+		<param name="/use_sim_time" value="false" />
+
+		<node pkg="nodelet" type="nodelet" name="demo_vision_manager" args="manager" output="screen" required="true" />
+
+		<include file="$(find nicol_vision)/launch/nicol_eye_cameras.launch">
+			<arg name="external_manager"            value="true" />
+			<arg name="nodelet_manager"             value="demo_vision_manager" />
+			<arg name="use_left_camera"             value="$(arg use_left_camera)" />
+			<arg name="use_right_camera"            value="$(arg use_right_camera)" />
+			<arg name="left_video_stream_provider"  value="$(arg left_camera_device)" />
+			<arg name="right_video_stream_provider" value="$(arg right_camera_device)" />
+			<arg name="always_capture"              value="$(eval bool(always_capture or record_bag))" />
+			<arg name="width"                       value="$(arg camera_width)" />
+			<arg name="height"                      value="$(arg camera_height)" />
+			<arg name="fps"                         value="$(arg camera_fps)" />
+			<arg name="visualize"                   value="false" />
+		</include>
+
+		<node if="$(eval bool(record_bag))" pkg="rosbag" type="record" name="record_camera_bag" output="screen" args="--lz4 --output-name $(arg record_bag) /tf /tf_static /NICOL/joint_states /left_eye_cam/image_raw /left_eye_cam/camera_info /right_eye_cam/image_raw /right_eye_cam/camera_info" launch-prefix="bash -c 'sleep $(arg record_bag_delay); $0 $@'" required="false" />
+
+	</group>
+
+</launch>

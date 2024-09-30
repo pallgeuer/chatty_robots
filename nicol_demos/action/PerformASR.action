@@ -1,0 +1,24 @@
+bool detect_start      # Whether to only start recording once speech has actually been detected (otherwise start immediately)
+bool detect_stop       # Whether to automatically stop recording when speech is no longer detected
+float32 start_timeout  # If detecting start, timeout for speech start to be detected (0 = No timeout)
+float32 min_duration   # Minimum duration of recorded audio in order to provide feedback updates (at least 1s)
+float32 max_duration   # Maximum duration of audio to record once started (0 = No maximum)
+float32 min_period     # Minimum time between feedback updates (at least 0.5s)
+bool live_text         # Whether to send intermediate ASR text results via the feedback as they become available
+---
+uint8 STOP_UNKNOWN = 0   # Stopped due to an unknown error or condition
+uint8 STOP_TIMEOUT = 1   # Stopped due to a timeout while waiting for start of speech
+uint8 STOP_DETECTED = 2  # Stopped due to end of speech being detected
+uint8 STOP_DURATION = 3  # Stopped due to maximum duration reached
+uint8 STOP_REQUEST = 4   # Stopped by manual stop request from client (i.e. cancel)
+bool started             # Whether audio recording started
+uint8 stop_reason        # Reason for why audio recording stopped (see STOP_*)
+float32 listened         # Duration of final listened audio
+float32 recorded         # Duration of final recorded audio
+string text              # Recognised text from the final recorded audio
+---
+bool started          # Whether audio recording has started
+float32 cur_listened  # Current duration of listened audio
+float32 cur_recorded  # Current duration of recorded audio
+bool have_text        # Whether recognised text is available (i.e. whether the ASR model was inferenced on the current recorded audio)
+string cur_text       # Current recognised text from the audio

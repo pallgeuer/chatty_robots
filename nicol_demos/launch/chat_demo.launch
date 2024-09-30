@@ -1,0 +1,58 @@
+<launch>
+
+	<!-- Chat inputs -->
+	<arg name="use_objects"        default="true" />
+	<arg name="use_human"          default="true" />
+	<arg name="use_asr"            default="true" />
+	<arg name="fixed_objects"      default="" />
+	<arg name="fixed_objects_pose" default="" />
+	<arg name="asr_detect"         default="false" />
+	<arg name="asr_duration"       default="30.0" />
+
+	<!-- Chat outputs -->
+	<arg name="use_speech" default="true" />
+	<arg name="use_head"   default="true" />
+	<arg name="use_face"   default="true" />
+	<arg name="use_arms"   default="true" />
+
+	<!-- Chat options -->
+	<arg name="use_model"      default="true" />
+	<arg name="model_response" default="" />
+	<arg name="query_facts"    default="true" />
+	<arg name="model_verbose"  default="false" />
+	<arg name="clear_history"  default="false" />
+
+	<!-- Debug options -->
+	<arg name="debug_asr"   default="false" />
+	<arg name="debug_head"  default="false" />
+	<arg name="debug_face"  default="false" />
+	<arg name="debug_arms"  default="false" />
+
+	<group if="$(eval use_objects or use_human)">
+		<include file="$(find nicol_demos)/launch/camera.launch" pass_all_args="true" />
+	</group>
+
+	<node pkg="nicol_demos" name="chat_demo" type="chat_demo.py" output="screen" required="true">
+		<param name="use_objects"        type="bool"   value="$(arg use_objects)" />
+		<param name="use_human"          type="bool"   value="$(arg use_human)" />
+		<param name="use_asr"            type="bool"   value="$(arg use_asr)" />
+		<param name="fixed_objects"      type="string" value="$(arg fixed_objects)" />
+		<param name="fixed_objects_pose" type="string" value="$(arg fixed_objects_pose)" />
+		<param name="asr_detect"         type="bool"   value="$(arg asr_detect)" />
+		<param name="asr_duration"       type="double" value="$(arg asr_duration)" />
+		<param name="use_speech"         type="bool"   value="$(arg use_speech)" />
+		<param name="use_head"           type="bool"   value="$(arg use_head)" />
+		<param name="use_face"           type="bool"   value="$(arg use_face)" />
+		<param name="use_arms"           type="bool"   value="$(arg use_arms)" />
+		<param name="use_model"          type="bool"   value="$(arg use_model)" />
+		<param name="model_response"     type="string" value="$(arg model_response)" />
+		<param name="query_facts"        type="bool"   value="$(arg query_facts)" />
+		<param name="model_verbose"      type="bool"   value="$(arg model_verbose)" />
+		<param name="clear_history"      type="bool"   value="$(arg clear_history)" />
+		<param name="debug_asr"          type="bool"   value="$(arg debug_asr)" />
+		<param name="debug_head"         type="bool"   value="$(arg debug_head)" />
+		<param name="debug_face"         type="bool"   value="$(arg debug_face)" />
+		<param name="debug_arms"         type="bool"   value="$(arg debug_arms)" />
+	</node>
+
+</launch>

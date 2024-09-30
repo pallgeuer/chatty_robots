@@ -1,0 +1,1 @@
+nicol_talker/tts_models--en--vctk--vits/*.pth filter=lfs diff=lfs merge=lfs -text lockable

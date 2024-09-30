@@ -1,0 +1,30 @@
+<launch>
+
+	<arg name="use_cameras"      default="false" />
+	<arg name="use_left_camera"  default="true" />
+	<arg name="use_right_camera" default="false" />
+	<arg name="camera_width"     default="640" />
+	<arg name="camera_height"    default="480" />
+	<arg name="adjust_scale"     default="1.0" />
+	<arg name="debug_vis"        default="false" />
+	<arg name="debug_gesture"    default="" />
+
+	<include if="$(arg use_cameras)" file="$(find nicol_demos)/launch/camera.launch" pass_all_args="true" />
+
+	<node pkg="nicol_demos" name="vild_demo" type="vild_demo.py" output="screen" required="true">
+		<param name="use_left_camera"  type="bool"   value="$(arg use_left_camera)" />
+		<param name="use_right_camera" type="bool"   value="$(arg use_right_camera)" />
+		<param name="camera_width"     type="int"    value="$(arg camera_width)" />
+		<param name="camera_height"    type="int"    value="$(arg camera_height)" />
+		<param name="adjust_scale"     type="double" value="$(arg adjust_scale)" />
+		<param name="debug_vis"        type="bool"   value="$(arg debug_vis)" />
+		<param name="max_boxes"        type="int"    value="$(arg max_boxes)" />
+		<param name="iou_threshold"    type="double" value="$(arg iou_threshold)" />
+		<param name="age_threshold"    type="double" value="$(arg age_threshold)" />
+		<param name="nms_threshold"    type="double" value="$(arg nms_threshold)" />
+		<param name="use_unknown"      type="bool"   value="$(arg use_unknown)" />
+		<param name="use_tracking"     type="bool"   value="$(arg use_tracking)" />
+		<param name="use_inclusion"    type="bool"   value="$(arg use_inclusion)" />
+	</node>
+
+</launch>

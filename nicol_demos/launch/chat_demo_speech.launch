@@ -1,0 +1,27 @@
+<launch>
+
+	<arg name="speech_model"  default="tts_models/en/vctk/vits" />
+	<arg name="speech_lang"   default="en" />
+	<arg name="speech_voice"  default="p336" />
+	<arg name="speech_tempo"  default="0.92" />
+	<arg name="item_pause"    default="1.0" />
+	<arg name="segment_pause" default="0.4" />
+	<arg name="use_cuda"      default="true" />
+	<arg name="preload_model" default="true" />
+	<arg name="verbose"       default="false" />
+	<arg name="debug"         default="false" />
+
+	<node pkg="nicol_demos" name="speech_server" type="speech_server.py" output="screen" required="true">
+		<param name="speech_model"  type="string" value="$(arg speech_model)" />
+		<param name="speech_lang"   type="string" value="$(arg speech_lang)" />
+		<param name="speech_voice"  type="string" value="$(arg speech_voice)" />
+		<param name="speech_tempo"  type="double" value="$(arg speech_tempo)" />
+		<param name="item_pause"    type="double" value="$(arg item_pause)" />
+		<param name="segment_pause" type="double" value="$(arg segment_pause)" />
+		<param name="use_cuda"      type="bool"   value="$(arg use_cuda)" />
+		<param name="preload_model" type="bool"   value="$(arg preload_model)" />
+		<param name="verbose"       type="bool"   value="$(arg verbose)" />
+		<param name="debug"         type="bool"   value="$(arg debug)" />
+	</node>
+
+</launch>

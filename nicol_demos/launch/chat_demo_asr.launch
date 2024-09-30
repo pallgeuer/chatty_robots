@@ -1,0 +1,61 @@
+<launch>
+
+	<arg name="mic_device"          default="" />
+	<arg name="always_capture"      default="true" />
+	<arg name="sound_start"         default="true" />
+	<arg name="sound_stop"          default="true" />
+
+	<arg name="asr_type"            default="whisper" />
+	<arg name="asr_model"           default="small" />
+	<arg name="audio_lang"          default="english" />
+	<arg name="translate"           default="true" />
+	<arg name="preload_model"       default="true" />
+	<arg name="use_cuda"            default="true" />
+
+	<arg name="energy_silence"      default="65" />
+	<arg name="energy_start"        default="200" />
+	<arg name="energy_stop"         default="120" />
+	<arg name="energy_dynamic"      default="true" />
+	<arg name="energy_dynamic_ts90" default="1.2" />
+	<arg name="beep_delay"          default="0.225" />
+	<arg name="starting_duration"   default="0.125" />
+	<arg name="start_duration"      default="0.25" />
+	<arg name="stop_duration"       default="1.2" />
+	<arg name="padding_duration"    default="0.7" />
+
+	<arg name="asr_details"         default="false" />
+	<arg name="verbose"             default="false" />
+	<arg name="debug"               default="false" />
+
+	<node pkg="nicol_demos" name="speech_asr" type="speech_asr.py" output="screen" required="true">
+
+		<param name="mic_device"          type="string" value="$(arg mic_device)" />
+		<param name="always_capture"      type="bool"   value="$(arg always_capture)" />
+		<param name="sound_start"         type="bool"   value="$(arg sound_start)" />
+		<param name="sound_stop"          type="bool"   value="$(arg sound_stop)" />
+
+		<param name="asr_type"            type="string" value="$(arg asr_type)" />
+		<param name="asr_model"           type="string" value="$(arg asr_model)" />
+		<param name="audio_lang"          type="string" value="$(arg audio_lang)" />
+		<param name="translate"           type="bool"   value="$(arg translate)" />
+		<param name="preload_model"       type="bool"   value="$(arg preload_model)" />
+		<param name="use_cuda"            type="bool"   value="$(arg use_cuda)" />
+
+		<param name="energy_silence"      type="double" value="$(arg energy_silence)" />
+		<param name="energy_start"        type="double" value="$(arg energy_start)" />
+		<param name="energy_stop"         type="double" value="$(arg energy_stop)" />
+		<param name="energy_dynamic"      type="bool"   value="$(arg energy_dynamic)" />
+		<param name="energy_dynamic_ts90" type="double" value="$(arg energy_dynamic_ts90)" />
+		<param name="beep_delay"          type="double" value="$(arg beep_delay)" />
+		<param name="starting_duration"   type="double" value="$(arg starting_duration)" />
+		<param name="start_duration"      type="double" value="$(arg start_duration)" />
+		<param name="stop_duration"       type="double" value="$(arg stop_duration)" />
+		<param name="padding_duration"    type="double" value="$(arg padding_duration)" />
+
+		<param name="asr_details"         type="bool"   value="$(arg asr_details)" />
+		<param name="verbose"             type="bool"   value="$(arg verbose)" />
+		<param name="debug"               type="bool"   value="$(arg debug)" />
+
+	</node>
+
+</launch>
